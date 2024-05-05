@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './muiTheme';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,12 +14,23 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+
+      <body className={`${inter.className} container mx-auto`}>
+        <AppRouterCacheProvider>
+          <ThemeProvider theme={theme}>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {children}
+            </div>
+          </ThemeProvider>
+        </AppRouterCacheProvider>
+      </body>
+
+    </html >
   );
 }
