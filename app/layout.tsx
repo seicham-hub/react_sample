@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
 import theme from './muiTheme';
 
 const inter = Inter({ subsets: ["latin"] });
@@ -24,7 +26,8 @@ export default function RootLayout({
       <body className={`${inter.className} container mx-auto`}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 gap-4">
+              <CssBaseline />
               {children}
             </div>
           </ThemeProvider>

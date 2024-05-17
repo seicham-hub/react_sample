@@ -1,0 +1,1 @@
+export const ENDPOINT: string = "http://localhost:8001/graphql/"

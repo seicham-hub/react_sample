@@ -87,3 +87,8 @@ route handler(v12以前はApi routes)
 データの流れが以下のようになる。
 リクエスト時
 ブラウザ→node.jsサーバ→APIサーバ
+
+# muiインストール
+```bash
+ npm install @mui/material @emotion/react @emotion/styled
+```
