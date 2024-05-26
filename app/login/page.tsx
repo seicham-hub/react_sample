@@ -14,13 +14,35 @@ import React from 'react';
 import { useEffect, useState } from 'react'
 import { useForm, Controller, SubmitHandler } from "react-hook-form"
 
+
+// import { useQuery, gql } from '@apollo/client';
 import { ENDPOINT } from "@/app/constants";
+import { ConstructionOutlined } from '@mui/icons-material';
+
+import { gql, useSuspenseQuery, useQuery } from '@apollo/client';
 // import sss from '@/app/components/Atoms'
 
 
+const GET_USERS = gql`
+query getAllUser {
+    result {
+        id
+        fullName
+        email
+        createdAt
+        updatedAt
+        deletedAt
+    }
+    userErrors {
+        code
+        message
+    }
+}
+`;
+
 function Copyright(props: any) {
     return (
-        <Typography variant="body2" color="text.secondary" aligh="center" {...props}>
+        <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
             <Link color="inherit" href="https://mui.com/">
                 your website
@@ -38,24 +60,38 @@ type Inputs = {
 
 export default function SignIn() {
 
-    const [data, setData] = useState<any>(null);
+    const [data1, setData] = useState<any>(null);
 
-    useEffect(() => {
-        const fechData = async () => {
-            try {
-                const response = await fetch(ENDPOINT, {
-                    cache: 'no-store',
-                    next: { revalidate: 10 },
-                });
-                const result = await response.json();
-                setData(result);
-                console.log("resultです", result);
-            } catch (error) {
-                console.error('Error fetching data', error);
-            }
-        }
-        fechData();
-    }, [])
+
+    let data, error;
+    try {
+        ({ data, error } = useQuery(GET_USERS, { errorPolicy: 'all' }));
+
+    } catch (e) {
+        console.log(e)
+    }
+
+    console.log(data, error)
+
+
+
+    // useEffect(() => {
+
+    //     const fechData = async () => {
+    //         try {
+    //             const response = await fetch(ENDPOINT, {
+    //                 cache: 'no-store',
+    //                 next: { revalidate: 10 },
+    //             });
+    //             const result = await response.json();
+    //             setData(result);
+    //             console.log("resultです", result);
+    //         } catch (error) {
+    //             console.error('Error fetching data', error);
+    //         }
+    //     }
+    //     fechData();
+    // }, [])
 
     const {
         control,
@@ -66,6 +102,14 @@ export default function SignIn() {
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         console.log(data);
     };
+    // const { loading, error, data } = useQuery(GET_USERS);
+    // if (loading) {
+    //     return <div>読み込み中</div>;
+    // }
+
+    // console.log("loading", loading)
+    // console.log("error", error)
+    // console.log("data", data)
 
 
     return (

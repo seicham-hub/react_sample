@@ -6,6 +6,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import theme from './muiTheme';
+import { ApolloWrapper } from "./apolloWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,24 +17,23 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-
       <body className={`${inter.className} container mx-auto`}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
-            <div className="grid grid-cols-1 gap-4">
-              <CssBaseline />
-              {children}
-            </div>
+            <ApolloWrapper>
+              <div className="grid grid-cols-1 gap-4">
+                <CssBaseline />
+                {children}
+              </div>
+            </ApolloWrapper>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
-
     </html >
   );
 }
